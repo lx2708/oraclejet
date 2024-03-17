@@ -92,11 +92,11 @@
                                 </div>
                             </oj-label-value>
                             <oj-label class="oj-label oj-label-value" for="createNewName">Name</oj-label>
-                            <oj-input-text id="createNewName" value='{{inputItemName}}'></oj-input-text>
+                            <oj-input-text id="createNewName" value='[[objetItem().name]]'></oj-input-text>
                             <oj-label class="oj-label oj-label-value" for="createNewPrice">Price</oj-label>
-                            <oj-input-text id="createNewPrice" value="{{inputPrice}}"></oj-input-text>
+                            <oj-input-text id="createNewPrice" value="{{objetItem().price}}"></oj-input-text>
                             <oj-label class="oj-label oj-label-value" for="createNewDesc">Description</oj-label>
-                            <oj-input-text id="createNewDesc" value="{{inputShortDesc}}"></oj-input-text>
+                            <oj-input-text id="createNewDesc" value="{{objetItem().short_desc}}"></oj-input-text>
                         </div>
                         <div slot="footer">
                             <oj-button id="submitBtn" on-oj-action="[[updateItemSubmit]]">Submit

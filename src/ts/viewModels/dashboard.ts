@@ -50,7 +50,9 @@ type ActivityItems = {
 
 class DashboardViewModel {
 
-  
+  objetItem: ko.Observable<Item | null>;
+  objetActivityItem: ko.Observable<ActivityItems | null>;
+
 
   // Fields in update dialog
   inputItemID: ko.Observable<number | null>;
@@ -156,6 +158,19 @@ class DashboardViewModel {
     this.quantity = 0;
     // inputImageFile has already been initialized.
 
+    this.objetItem = ko.observable<Item>({
+        id: 0,
+        name: "",
+        short_desc: "",
+        price: 0,
+        quantity: 0,
+        quantity_shipped: 0,
+        quantity_instock: 0,
+        activity_id: 0,
+        image: "",
+
+      });
+
     // Initialize fields in update dialog
     this.inputItemID = ko.observable(null);
     this.inputItemName = ko.observable(null);
@@ -217,9 +232,17 @@ class DashboardViewModel {
   // Update item and close dialog
   public showEditDialog = (event: ojButtonEventMap["ojAction"]) => {
 
-    this.inputItemName(this.itemData().name);
-    this.inputPrice(this.itemData().price);
-    this.inputShortDesc(this.itemData().short_desc);
+    //this.inputItemName(this.itemData().name);
+    console.log(this.itemData());
+
+    this.objetItem(this.itemData());
+    console.log(this.objetItem());
+    console.log(this.objetItem().name);
+
+
+
+    //this.inputPrice(this.itemData().price);
+    //this.inputShortDesc(this.itemData().short_desc);
 
     (document.getElementById("editDialog") as ojDialog).open();
   }
@@ -227,12 +250,15 @@ class DashboardViewModel {
   public updateItemSubmit = async (event: ojButtonEventMap["ojAction"]) => {
 
     const currentRow = this.selectedRow;
+    console.log(1, currentRow);
+
     if (currentRow != null) {
+      console.log(2, currentRow);
       const row = {
         itemId: this.itemData().id,
-        name: this.inputItemName(),
-        price: this.inputPrice(),
-        short_desc: this.inputShortDesc()
+        name: this.objetItem().name,
+        price: this.objetItem().price,
+        short_desc: this.objetItem().short_desc
       };
 
       // Create and send request to update row on rest service
@@ -398,6 +424,7 @@ class DashboardViewModel {
     if (isClicked != null) {
 
       // If selection, populate and display list
+      this.itemData(event.detail.value.data);
       this.itemData(event.detail.value.data);
 
       // Create variable and get attributes of the items list to set pie chart values
